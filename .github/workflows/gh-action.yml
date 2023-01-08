@@ -41,7 +41,7 @@ on:
           - fugu
 
 jobs:
-onSchedule:
+  onSchedule:
     if: github.event_name == 'schedule'
     name: On Schedule
     runs-on: ubuntu-latest
