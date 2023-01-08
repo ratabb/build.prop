@@ -77,7 +77,7 @@ jobs:
       - name: Get Filename
         # FIXME: How to know downloaded file name?
         run: |
-          ls *.zip
+          ls
           fileName=(*.zip)
           echo "fileName=$fileName" >> $GITHUB_ENV
 
