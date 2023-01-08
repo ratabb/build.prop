@@ -80,10 +80,9 @@ jobs:
       - name: Copy prop to result
         # TODO: check file with ls -R
         run: |
-          ls -R .
+          ls -R . *.prop
           mkdir -p result
-          cp ./**/extracted/module.prop result/
-          cp ./**/extracted/system.prop result/
+          find . -type f -regex ".*/**/.*prop" -exec cp {} result/ \;
 
       - name: Upload Prop
         uses: actions/upload-artifact@v3
