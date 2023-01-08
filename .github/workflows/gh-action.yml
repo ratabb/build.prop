@@ -75,18 +75,17 @@ jobs:
         run: ./download_last_ota_build.sh ${{ github.event.inputs.device_name }}
 
       - name: Get Filename
-        id: get_filename
         # FIXME: How to know downloaded file name?
         run: |
-          echo "##[set-output name=filename;]${find . -maxdepth 1 -type f -name '*.zip'}"
+          echo "fileName=${find . -maxdepth 1 -type f -name '*.zip'}" >> $GITHUB_ENV
 
       - name: Dump Payload
         run: |
-          python ./ota_dumper/extract_android_ota_payload.py ${{ steps.get_filename.outputs.filename }} ./
+          python ./ota_dumper/extract_android_ota_payload.py ${{ env.fileName }} ./
 
       - name: Extract Image and build prop
         run: |
-          rm ${{ steps.get_filename.outputs.filename }}
+          rm ${{ env.fileName }}
           ./extract_images.sh
 
       - name: Copy prop to result
