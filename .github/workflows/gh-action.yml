@@ -82,6 +82,7 @@ jobs:
       - name: Copy prop to result
         run: |
           mkdir -p result
+          ls */*.prop
           cp ./**/**/{system,module}.prop  result/
 
       - name: Upload Prop
