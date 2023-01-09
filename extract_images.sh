@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Early exit when we fail
-set -e
-
 # Using util_functions.sh
 [ -f "util_functions.sh" ] && . ./util_functions.sh || { echo "util_functions.sh not found" && exit 1; }
 
