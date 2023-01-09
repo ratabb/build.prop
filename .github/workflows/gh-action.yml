@@ -71,7 +71,9 @@ jobs:
           pip3 install -Iv protobuf==3.20.3
 
       - name: Make executable all script
-        run: chmod +x *.sh
+        run: |
+          set -e
+          chmod +x *.sh
 
       - name: Download last ota ${{ github.event.inputs.device_name }}
         run: ./download_last_ota_build.sh ${{ github.event.inputs.device_name }}
@@ -82,7 +84,6 @@ jobs:
       - name: Copy prop to result
         run: |
           mkdir -p result
-          ls -R
           cp ./**/**/{system,module}.prop  result/
 
       - name: Upload Prop
