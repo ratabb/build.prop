@@ -82,7 +82,7 @@ jobs:
       - name: Copy prop to result
         run: |
           mkdir -p result
-          cp */**/{system,module}.prop  result/
+          cp ./**/{system,module}.prop  result/
 
       - name: Upload Prop
         uses: actions/upload-artifact@v3
