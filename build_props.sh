@@ -266,6 +266,9 @@ echo -n "${module_prop::-1}" >"$dir/module.prop"
 # Display information about prop
 print_message "[$device_build_description] ($device_name) Prop" debug
 
+# Send to actions
+echo DEVICE_BUILD_DESC=$device_build_description >> "$GITHUB_ENV"
+
 # Display saving location
 print_message "Saved to \"${dir}/system.prop\"" info
 print_message "Saved to \"${dir}/module.prop\"" info
