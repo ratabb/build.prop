@@ -41,13 +41,38 @@ jobs:
           mkdir -p result
           cp ./**/**/{system,module}.prop  result/
 
+      - name: Checkout Device Repo
+        if: ${{ matrix.device_name == 'raven' }}
+        uses: actions/checkout@v3
+        with:
+          repository: "Pixel-Props/raven"
+          path: "raven/"
+
+      - name: Make magisk module
+        if: ${{ matrix.device_name == 'raven' }}
+        run: |
+          echo ${{ env.DEVICE_BUILD_DESC }}
+          rm ./raven/{system,module}.prop
+          cp ./result/{system,module}.prop raven/
+
       - name: Upload Prop ${{ matrix.device_name }}
-        # TODO: This step is temporary
-        # check device prop repo
-        # make update/release that repo
-        # using action `softprops/action-gh-release`.
+        if: ${{ matrix.device_name == 'raven' }}
         uses: actions/upload-artifact@v3
         with:
-          name: system-module-${{ matrix.device_name }}.prop
-          path: result
+          name: raven-${{ env.DEVICE_BUILD_DESC }}
+          path: raven
           if-no-files-found: error
+      # - name: Copy prop to result ${{ matrix.device_name }}
+      #   run: |
+      #     mkdir -p result
+      #     cp ./**/**/{system,module}.prop  result/
+      # - name: Upload Prop ${{ matrix.device_name }}
+      #   # TODO: This step is temporary
+      #   # check device prop repo
+      #   # make update/release that repo
+      #   # using action `softprops/action-gh-release`.
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: system-module-${{ matrix.device_name }}.prop
+      #     path: result
+      #     if-no-files-found: error
