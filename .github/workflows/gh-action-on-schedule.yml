@@ -41,26 +41,26 @@ jobs:
           mkdir -p result
           cp ./**/**/{system,module}.prop  result/
 
-      - name: Checkout Device Repo
-        if: ${{ matrix.device_name == 'raven' }}
+      - name: Checkout Device Repo ${{ matrix.device_name }}
+        if: ${{ matrix.device_name != 'cheetah' }}
         uses: actions/checkout@v3
         with:
-          repository: "Pixel-Props/raven"
-          path: "raven/"
+          repository: "Pixel-Props/${{ matrix.device_name }}"
+          path: "repo/"
 
       - name: Make magisk module
-        if: ${{ matrix.device_name == 'raven' }}
+        if: ${{ matrix.device_name != 'cheetah' }}
         run: |
           echo ${{ env.DEVICE_BUILD_DESC }}
-          rm ./raven/{system,module}.prop
-          cp ./result/{system,module}.prop raven/
+          rm ./repo/{system,module}.prop
+          cp ./result/{system,module}.prop repo/
 
       - name: Upload Prop ${{ matrix.device_name }}
-        if: ${{ matrix.device_name == 'raven' }}
+        if: ${{ matrix.device_name != 'cheetah' }}
         uses: actions/upload-artifact@v3
         with:
-          name: raven-${{ env.DEVICE_BUILD_DESC }}
-          path: raven
+          name: ${{ env.DEVICE_BUILD_DESC }}
+          path: repo
           if-no-files-found: error
       # - name: Copy prop to result ${{ matrix.device_name }}
       #   run: |
